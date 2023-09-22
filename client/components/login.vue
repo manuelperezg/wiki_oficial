@@ -2,7 +2,7 @@
   v-app
     .login(:style='`background-image: url(` + bgUrl + `);`')
       .login-sd
-        .d-flex.mb-5
+        .d-flex.mb-5.align-center.mt-5.pt-4
           .login-logo
             v-avatar(tile, size='34')
               v-img(:src='logoUrl')
@@ -273,7 +273,7 @@ export default {
       default: null
     }
   },
-  data () {
+  data() {
     return {
       error: false,
       strategies: [],
@@ -300,14 +300,14 @@ export default {
   },
   computed: {
     activeModal: sync('editor/activeModal'),
-    siteTitle () {
+    siteTitle() {
       return siteConfig.title
     },
-    isSocialShown () {
+    isSocialShown() {
       return this.strategies.length > 1
     },
-    logoUrl () { return siteConfig.logoUrl },
-    filteredStrategies () {
+    logoUrl() { return siteConfig.logoUrl },
+    filteredStrategies() {
       const qParams = new URLSearchParams(window.location.search)
       if (this.hideLocal && !qParams.has('all')) {
         return _.reject(this.strategies, ['key', 'local'])
@@ -315,17 +315,17 @@ export default {
         return this.strategies
       }
     },
-    isUsernameEmail () {
+    isUsernameEmail() {
       return this.selectedStrategy.strategy.usernameType === `email`
     }
   },
   watch: {
-    filteredStrategies (newValue, oldValue) {
+    filteredStrategies(newValue, oldValue) {
       if (_.head(newValue).strategy.useForm) {
         this.selectedStrategyKey = _.head(newValue).key
       }
     },
-    selectedStrategyKey (newValue, oldValue) {
+    selectedStrategyKey(newValue, oldValue) {
       this.selectedStrategy = _.find(this.strategies, ['key', newValue])
       if (this.screen === 'changePwd') {
         return
@@ -341,7 +341,7 @@ export default {
       }
     }
   },
-  mounted () {
+  mounted() {
     this.isShown = true
     if (this.changePwdContinuationToken) {
       this.screen = 'changePwd'
@@ -352,7 +352,7 @@ export default {
     /**
      * LOGIN
      */
-    async login () {
+    async login() {
       this.errorShown = false
       if (this.username.length < 2) {
         this.errorMessage = this.$t('auth:invalidEmailUsername')
@@ -419,7 +419,7 @@ export default {
     /**
      * VERIFY TFA CODE
      */
-    async verifySecurityCode (setup = false) {
+    async verifySecurityCode(setup = false) {
       if (this.securityCode.length !== 6) {
         this.$store.commit('showNotification', {
           style: 'red',
@@ -496,7 +496,7 @@ export default {
     /**
      * CHANGE PASSWORD
      */
-    async changePassword () {
+    async changePassword() {
       this.loaderColor = 'grey darken-4'
       this.loaderTitle = this.$t('auth:changePwd.loading')
       this.isLoading = true
@@ -553,7 +553,7 @@ export default {
     /**
      * SWITCH TO FORGOT PASSWORD SCREEN
      */
-    forgotPassword () {
+    forgotPassword() {
       this.screen = 'forgot'
       this.$nextTick(() => {
         this.$refs.iptForgotPwdEmail.focus()
@@ -562,7 +562,7 @@ export default {
     /**
      * FORGOT PASSWORD SUBMIT
      */
-    async forgotPasswordSubmit () {
+    async forgotPasswordSubmit() {
       this.loaderColor = 'grey darken-4'
       this.loaderTitle = this.$t('auth:forgotPasswordLoading')
       this.isLoading = true
@@ -615,7 +615,7 @@ export default {
       }
       this.isLoading = false
     },
-    handleLoginResponse (respObj) {
+    handleLoginResponse(respObj) {
       this.continuationToken = respObj.continuationToken
       if (respObj.mustChangePwd === true) {
         this.screen = 'changePwd'
@@ -682,7 +682,7 @@ export default {
         }
       `,
       update: (data) => _.sortBy(data.authentication.activeStrategies, ['order']),
-      watchLoading (isLoading) {
+      watchLoading(isLoading) {
         this.$store.commit(`loading${isLoading ? 'Start' : 'Stop'}`, 'login-strategies-refresh')
       }
     }
@@ -691,103 +691,106 @@ export default {
 </script>
 
 <style lang="scss">
-  .login {
-    // background-image: url('/_assets/img/splash/1.jpg');
-    background-color: mc('grey', '900');
-    background-size: cover;
-    background-position: center center;
-    width: 100%;
-    height: 100%;
+.login {
+  // background-image: url('/_assets/img/splash/1.jpg');
+  background-color: mc('grey', '900');
+  background-size: cover;
+  background-position: center center;
+  width: 100%;
+  height: 100%;
 
-    &-sd {
-      background-color: rgba(255,255,255,.8);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-left: 1px solid rgba(255,255,255,.85);
-      border-right: 1px solid rgba(255,255,255,.85);
-      width: 450px;
-      height: 100%;
-      margin-left: 5vw;
+  &-sd {
+    background-color: rgba(255, 255, 255, .8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-left: 1px solid rgba(255, 255, 255, .85);
+    border-right: 1px solid rgba(255, 255, 255, .85);
+    width: 450px;
+    height: 80%;
+    margin-left: 5vw;
+    //margin-top: 25px;
+    border-radius: 15px;
 
-      @at-root .no-backdropfilter & {
-        background-color: rgba(255,255,255,.95);
-      }
-
-      @include until($tablet) {
-        margin-left: 0;
-        width: 100%;
-      }
+    @at-root .no-backdropfilter & {
+      background-color: rgba(255, 255, 255, .95);
     }
 
-    &-logo {
-      padding: 12px 0 0 12px;
-      width: 58px;
-      height: 58px;
-      background-color: #222;
-      margin-left: 12px;
-      border-bottom-left-radius: 7px;
-      border-bottom-right-radius: 7px;
-    }
-
-    &-title {
-      height: 58px;
-      padding-left: 12px;
-      display: flex;
-      align-items: center;
-      text-shadow: .5px .5px #FFF;
-    }
-
-    &-subtitle {
-      padding: 24px 12px 12px 12px;
-      color: #111;
-      font-weight: 500;
-      text-shadow: 1px 1px rgba(255,255,255,.5);
-      background-image: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,.15));
-      text-align: center;
-      border-bottom: 1px solid rgba(0,0,0,.3);
-    }
-
-    &-info {
-      border-top: 1px solid rgba(255,255,255,.85);
-      background-color: rgba(255,255,255,.15);
-      border-bottom: 1px solid rgba(0,0,0,.15);
-      padding: 12px;
-      font-size: 13px;
-      text-align: center;
-      color: mc('grey', '900');
-    }
-
-    &-list {
-      border-top: 1px solid rgba(255,255,255,.85);
-      padding: 12px;
-    }
-
-    &-form {
-      padding: 12px;
-      border-top: 1px solid rgba(255,255,255,.85);
-    }
-
-    &-main {
-      flex: 1 0 100vw;
-      height: 100vh;
-    }
-
-    &-tfa {
-      background-color: #EEE;
-      border: 7px solid #FFF;
-
-      &-field input {
-        text-align: center;
-      }
-
-      &-qr {
-        background-color: #FFF;
-        padding: 5px;
-        border-radius: 5px;
-        width: 200px;
-        height: 200px;
-        margin: 0 auto;
-      }
+    @include until($tablet) {
+      margin-left: 0;
+      width: 100%;
     }
   }
+
+  &-logo {
+    padding: 12px 0 0 12px;
+    width: 58px;
+    height: 58px;
+    background-color: #222;
+    margin-left: 12px;
+    //border-bottom-left-radius: 7px;
+    //border-bottom-right-radius: 7px;
+    //margin-top: 17px;
+  }
+
+  &-title {
+    height: 58px;
+    padding-left: 12px;
+    display: flex;
+    align-items: center;
+    text-shadow: .5px .5px #FFF;
+  }
+
+  &-subtitle {
+    padding: 24px 12px 12px 12px;
+    color: #111;
+    font-weight: 500;
+    text-shadow: 1px 1px rgba(255, 255, 255, .5);
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, .15));
+    text-align: center;
+    border-bottom: 1px solid rgba(0, 0, 0, .3);
+  }
+
+  &-info {
+    border-top: 1px solid rgba(255, 255, 255, .85);
+    background-color: rgba(255, 255, 255, .15);
+    border-bottom: 1px solid rgba(0, 0, 0, .15);
+    padding: 12px;
+    font-size: 13px;
+    text-align: center;
+    color: mc('grey', '900');
+  }
+
+  &-list {
+    border-top: 1px solid rgba(255, 255, 255, .85);
+    padding: 12px;
+  }
+
+  &-form {
+    padding: 12px;
+    border-top: 1px solid rgba(255, 255, 255, .85);
+  }
+
+  &-main {
+    flex: 1 0 100vw;
+    height: 100vh;
+  }
+
+  &-tfa {
+    background-color: #EEE;
+    border: 7px solid #FFF;
+
+    &-field input {
+      text-align: center;
+    }
+
+    &-qr {
+      background-color: #FFF;
+      padding: 5px;
+      border-radius: 5px;
+      width: 200px;
+      height: 200px;
+      margin: 0 auto;
+    }
+  }
+}
 </style>

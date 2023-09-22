@@ -1,12 +1,11 @@
 <template lang="pug">
-  v-footer.justify-center(:color='bgColor', inset)
-    .caption.grey--text(:class='$vuetify.theme.dark ? `text--lighten-1` : `text--darken-1`')
-      template(v-if='footerOverride')
-        span(v-html='footerOverrideRender + ` |&nbsp;`')
-      template(v-else-if='company && company.length > 0 && contentLicense !== ``')
-        span(v-if='contentLicense === `alr`') {{ $t('common:footer.copyright', { company: company, year: currentYear, interpolation: { escapeValue: false } }) }} |&nbsp;
-        span(v-else) {{ $t('common:footer.license', { company: company, license: $t('common:license.' + contentLicense), interpolation: { escapeValue: false } }) }} |&nbsp;
-      span {{ $t('common:footer.poweredBy') }} #[a(href='https://wiki.js.org', ref='nofollow') Wiki.js]
+v-footer.justify-center(:color='bgColor', inset)
+  .caption.grey--text(:class='$vuetify.theme.dark ? `text--lighten-1` : `text--darken-1`')
+    template(v-if='footerOverride')
+      span(v-html='footerOverrideRender + ` |&nbsp;`')
+    template(v-else-if='company && company.length > 0 && contentLicense !== ``')
+      span(v-if='contentLicense === `alr`') {{ $t('common:footer.copyright', { company: company, year: currentYear, interpolation: { escapeValue: false } }) }}
+      span(v-else) {{ $t('common:footer.license', { company: company, license: $t('common:license.' + contentLicense), interpolation: { escapeValue: false } }) }}
 </template>
 
 <script>
@@ -39,7 +38,7 @@ export default {
     company: get('site/company'),
     contentLicense: get('site/contentLicense'),
     footerOverride: get('site/footerOverride'),
-    footerOverrideRender () {
+    footerOverrideRender() {
       if (!this.footerOverride) { return '' }
       return md.renderInline(this.footerOverride)
     },
@@ -55,21 +54,21 @@ export default {
 </script>
 
 <style lang="scss">
-  .v-footer {
-    a {
-      text-decoration: none;
+.v-footer {
+  a {
+    text-decoration: none;
+  }
+
+  &.altbg {
+    background: mc('theme', 'primary');
+
+    span {
+      color: mc('blue', '300');
     }
 
-    &.altbg {
-      background: mc('theme', 'primary');
-
-      span {
-        color: mc('blue', '300');
-      }
-
-      a {
-        color: mc('blue', '200');
-      }
+    a {
+      color: mc('blue', '200');
     }
   }
+}
 </style>
