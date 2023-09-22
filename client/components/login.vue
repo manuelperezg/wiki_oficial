@@ -2,12 +2,9 @@
   v-app
     .login(:style='`background-image: url(` + bgUrl + `);`')
       .login-sd
-        .d-flex.mb-5.align-center.mt-5.pt-4
-          .login-logo
-            v-avatar(tile, size='34')
-              v-img(:src='logoUrl')
+        .d-flex.align-center.mt-5.pt-4.justify-center
           .login-title
-            .text-h6.grey--text.text--darken-4 {{ siteTitle }}
+            .text-h4.grey--text.text--darken-4 {{ siteTitle }}
         v-alert.mb-0(
           v-model='errorShown'
           transition='slide-y-reverse-transition'
@@ -47,7 +44,7 @@
               flat
               prepend-inner-icon='mdi-clipboard-account'
               background-color='white'
-              color='blue darken-2'
+              color='green darken-2'
               hide-details
               ref='iptEmail'
               v-model='username'
@@ -61,7 +58,7 @@
               flat
               prepend-inner-icon='mdi-form-textbox-password'
               background-color='white'
-              color='blue darken-2'
+              color='green darken-2'
               hide-details
               ref='iptPassword'
               v-model='password'
@@ -76,7 +73,7 @@
             v-btn.mt-2.text-none(
               width='100%'
               large
-              color='blue darken-2'
+              color='green darken-2'
               dark
               @click='login'
               :loading='isLoading'
@@ -109,7 +106,7 @@
               flat
               prepend-inner-icon='mdi-clipboard-account'
               background-color='white'
-              color='blue darken-2'
+              color='green darken-2'
               hide-details
               ref='iptForgotPwdEmail'
               v-model='username'
@@ -121,7 +118,7 @@
             v-btn.mt-2.text-none(
               width='100%'
               large
-              color='blue darken-2'
+              color='green darken-2'
               dark
               @click='forgotPasswordSubmit'
               :loading='isLoading'
@@ -147,7 +144,7 @@
               flat
               prepend-inner-icon='mdi-form-textbox-password'
               background-color='white'
-              color='blue darken-2'
+              color='green darken-2'
               hide-details
               ref='iptNewPassword'
               v-model='newPassword'
@@ -162,7 +159,7 @@
               flat
               prepend-inner-icon='mdi-form-textbox-password'
               background-color='white'
-              color='blue darken-2'
+              color='green darken-2'
               hide-details
               v-model='newPasswordVerify'
               :placeholder='$t(`auth:changePwd.newPasswordVerifyPlaceholder`)'
@@ -173,7 +170,7 @@
             v-btn.mt-2.text-none(
               width='100%'
               large
-              color='blue darken-2'
+              color='green darken-2'
               dark
               @click='changePassword'
               :loading='isLoading'
@@ -191,7 +188,7 @@
             solo
             flat
             background-color='white'
-            color='blue darken-2'
+            color='green darken-2'
             hide-details
             ref='iptTFA'
             v-model='securityCode'
@@ -203,7 +200,7 @@
           v-btn.mt-2.text-none(
             width='100%'
             large
-            color='blue darken-2'
+            color='green darken-2'
             dark
             @click='verifySecurityCode(false)'
             :loading='isLoading'
@@ -225,7 +222,7 @@
             solo
             flat
             background-color='white'
-            color='blue darken-2'
+            color='green darken-2'
             hide-details
             ref='iptTFASetup'
             v-model='securityCode'
@@ -237,7 +234,7 @@
           v-btn.mt-2.text-none(
             width='100%'
             large
-            color='blue darken-2'
+            color='green darken-2'
             dark
             @click='verifySecurityCode(true)'
             :loading='isLoading'
@@ -741,7 +738,7 @@ export default {
   }
 
   &-subtitle {
-    padding: 24px 12px 12px 12px;
+    padding: 10px 12px 12px 12px;
     color: #111;
     font-weight: 500;
     text-shadow: 1px 1px rgba(255, 255, 255, .5);
