@@ -27,7 +27,7 @@ server/views/setup.pug
 .fusebox
 
 # Config Files
-/config.yml
+
 
 # Data directories
 /repo
@@ -35,7 +35,7 @@ server/views/setup.pug
 /uploads
 /content
 /temp
-*.sqlite
+
 
 # IDE exclude
 .idea
